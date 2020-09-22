@@ -13,22 +13,21 @@ This repository is also used for issue tracking and feature requests.
 curl -fsSL 'https://bands.sh/get-bands.sh' | sh
 ```
 
-## Example
+## Usage
 
-```
-# Create a sample yaml, lesson.yaml.
+### Create a sample yaml, lesson.yaml.
 
 ```
 ---
-deployment_name: react_lesson_live
+deployment_name: react_lessons_live
 
-gateway: 
+gateway:
   type: stripe
 
 customer_portal: true
 
 products:
-  - id: react_lesson_live
+  - id: react_lessons_live
     name: Online 1-on-1 React Lessons
     description: Online 1-on-1 React Lessons with World Class Developers. 
     images: []
@@ -40,7 +39,7 @@ products:
     type: service
 
 plans:
-  - product: react_lesson_live
+  - product: react_lessons_live
     nickname: Once a week
     metadata:
       bullets:
@@ -53,7 +52,7 @@ plans:
     interval: monthly
     amount: '$299.00'
 
-  - product: react_lesson_live
+  - product: react_lessons_live
     nickname: One time session
     metadata:
       bullets:
@@ -65,14 +64,17 @@ plans:
     amount: '$99.00'
 ```
 
-# Create a Bands.sh account.
-bands init --email <email>
+### Create a Bands.sh account.
 
-# Create a payment page.
-bands up --file lesson.yaml
+`bands init --email <email>`
 
-# Archive the payment page.
-bands up --file lesson.yaml
+### Create a payment page.
+
+`bands up --file lesson.yaml`
+
+### Archive the payment page.
+
+`bands up --file lesson.yaml`
 
 ## Contributing
 
