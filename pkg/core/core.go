@@ -39,8 +39,7 @@ type Account struct {
 }
 
 var (
-	//apiHost = "https://api.bands.sh"
-	apiHost       = "http://localhost:9001"
+	apiHost       = "https://api.bands.sh"
 	ACTION_UP     = "up"
 	ACTION_DOWN   = "down"
 	ACTION_STATUS = "status"
