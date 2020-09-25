@@ -10,7 +10,7 @@ This repository is also used for issue tracking and feature requests.
 `bands` has been tested on Mac, Linux, and Windows WSL.
 
 ```shell
-curl -fsSL 'https://bands.sh/get-bands.sh' | sh
+curl -fsSL 'https://bands-sh.s3.amazonaws.com/get-bands.sh' | sh
 ```
 
 ## Usage
@@ -50,7 +50,8 @@ plans:
       images: []
     usage_type: licensed
     interval: monthly
-    amount: '$299.00'
+    currency: usd
+    amount: '299.00'
 
   - product: react_lessons_live
     nickname: One time session
@@ -61,7 +62,8 @@ plans:
         - Cover a wide range of topics
         - Prep for interviews with a mock interviewer
       images: []
-    amount: '$99.00'
+    currency: usd
+    amount: '99.00'
 ```
 
 ### Create a Bands.sh account.
@@ -70,11 +72,11 @@ plans:
 
 ### Create a payment page.
 
-`bands up --file lesson.yaml`
+`bands up -f lesson.yaml`
 
 ### Archive the payment page.
 
-`bands up --file lesson.yaml`
+`bands down -f lesson.yaml`
 
 ## Contributing
 

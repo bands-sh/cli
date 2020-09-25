@@ -9,11 +9,10 @@ import (
 	"github.com/spf13/viper"
 )
 
-// upCmd represents the up command
 var upCmd = &cobra.Command{
 	Use:   "up",
-	Short: "",
-	Long:  ``,
+	Short: "Create a checkout page",
+	Long:  `This commands creates a checkout via a yaml file input.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		token = viper.GetString("token")
 		email = viper.GetString("email")
@@ -34,9 +33,8 @@ var upCmd = &cobra.Command{
 				url = yaml.Data.CheckoutUrl
 				viper.Set("url", url)
 				viper.WriteConfig()
-				fmt.Println(au.Green(au.Bold("Success!")))
 				fmt.Println(``)
-				fmt.Println("Your checkout page is live at", au.Bold(url))
+				fmt.Println(au.Green(au.Bold("Success!")), "Your checkout page is live at", au.Bold(url))
 				fmt.Println(``)
 				fmt.Println("You can also embed your checkout page into your own website:")
 				fmt.Printf(`<iframe src="%s" frameborder="0" allowfullscreen style="width:100%%;height:100%%;"><iframe>`, url)
@@ -53,6 +51,6 @@ var upCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(upCmd)
-
 	upCmd.Flags().StringP("file", "f", "", "bands up -f <payments.yaml>")
+	upCmd.MarkFlagRequired("file")
 }

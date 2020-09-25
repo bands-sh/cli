@@ -12,24 +12,20 @@ import (
 )
 
 var (
-	cfgFile      string
-	debug        bool
-	checkoutURL  = "checkout.bands.sh"
-	apiURL       = "api.bands.sh"
-	websiteURL   = "bands.sh"
-	upEndpoint   = fmt.Sprintf(`%s/api/action/up/`, apiURL)
-	downEndpoint = fmt.Sprintf(`%s/api/action/down/`, apiURL)
-	email        string
-	token        string
-	setToken     string
-	retToken     string
-	retActive    bool
-	tagline      = "Payments as Code"
-	file         string
-	url          string
+	cfgFile     string
+	debug       bool
+	checkoutURL = "checkout.bands.sh"
+	websiteURL  = "bands.sh"
+	tagline     = "Payments as Code"
+	email       string
+	token       string
+	setToken    string
+	retToken    string
+	retActive   bool
+	file        string
+	url         string
 )
 
-// rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "bands",
 	Short: tagline,
@@ -50,8 +46,6 @@ Getting started:
 	},
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
@@ -61,11 +55,10 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.bands.yaml")
-	rootCmd.PersistentFlags().BoolVar(&debug, "debug", false, "run in debug mode")
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file (default is $HOME/.bands.yaml")
+	rootCmd.PersistentFlags().BoolVarP(&debug, "debug", "d", false, "run in debug mode")
 }
 
-// initConfig reads in config file and ENV variables if set.
 func initConfig() {
 	home, err := homedir.Dir()
 	configPath := fmt.Sprintf("%s/.bands.yaml", home)
@@ -102,7 +95,6 @@ func initConfig() {
 		}
 	}
 
-	// read in environment variables that match
 	viper.AutomaticEnv()
 
 	// If a config file is found, read it in.

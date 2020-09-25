@@ -5,7 +5,7 @@ import (
 )
 
 type YamlDownResponseData struct {
-	Done string `json:"done"`
+	CheckoutUrl string `json:"checkout_url"`
 }
 
 type YamlDownResponse struct {

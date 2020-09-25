@@ -9,10 +9,9 @@ import (
 	"github.com/spf13/viper"
 )
 
-// statusCmd represents the status command
 var statusCmd = &cobra.Command{
 	Use:   "status",
-	Short: "",
+	Short: "Get the status of your checkout page.",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		token = viper.GetString("token")
@@ -60,6 +59,6 @@ var statusCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(statusCmd)
-
-	statusCmd.Flags().StringP("file", "f", "", "bands up -f <payments.yaml>")
+	statusCmd.Flags().StringP("file", "f", "", "bands status -f <payments.yaml>")
+	downCmd.MarkFlagRequired("file")
 }

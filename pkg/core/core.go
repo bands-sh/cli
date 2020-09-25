@@ -39,7 +39,7 @@ type Account struct {
 }
 
 var (
-	apiHost       = "https://api.bands.sh"
+	apiURL        = "https://api.bands.sh"
 	ACTION_UP     = "up"
 	ACTION_DOWN   = "down"
 	ACTION_STATUS = "status"
@@ -47,12 +47,10 @@ var (
 )
 
 func AccountCreate(email string, forced bool, debug bool) (accResp AccountResponse, statusCode int, err error) {
-
 	var acc Account
 	acc.Email = email
-
 	params, err := json.Marshal(acc)
-	url := apiHost + "/api/accounts/"
+	url := apiURL + "/api/accounts/"
 
 	if forced {
 		url = url + "?force=true"
@@ -65,7 +63,7 @@ func AccountCreate(email string, forced bool, debug bool) (accResp AccountRespon
 	}
 
 	if debug == true {
-		fmt.Println("[debug] "+url, " => ", string(respBytes))
+		fmt.Println("[debug]", url, "=>", string(respBytes))
 	}
 
 	err = json.Unmarshal(respBytes, &accResp)
@@ -76,7 +74,7 @@ func AccountCreate(email string, forced bool, debug bool) (accResp AccountRespon
 func Upload(email string, token string, filepath string, action string) (respData ActionResponse, respBytes []byte, url string, statusCode int, err error) {
 	data, err := ioutil.ReadFile(filepath)
 	params, err := yamlLib.YAMLToJSON(data)
-	url = apiHost + "/api/action/" + action + "/?data_format=json&api_key=" + token + "&email=" + email
+	url = apiURL + "/api/action/" + action + "/?data_format=json&api_key=" + token
 	respBytes, statusCode = utils.JsonPost(url, params)
 	_ = json.Unmarshal([]byte(respBytes), &respData)
 

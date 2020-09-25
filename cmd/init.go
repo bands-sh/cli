@@ -15,16 +15,26 @@ var (
 	passedEmail string
 )
 
-// initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "",
-	Long:  ``,
+	Short: "Create a Bands account or reset existing one",
+	Long: `This command can be used to create a new Bands account.
+
+It can also be used to fully reset an existing account by using the --force flag.
+If --force flag is used, we will issue you a new Bands API key, and email you an
+activation link.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		if passedEmail == "" {
+			fmt.Println(``)
+			fmt.Println("Please supply your email address.", au.Bold(fmt.Sprintf("$ bands init --email <email>")))
+			fmt.Println(``)
+			return
+		}
+
 		accResp, statusCode, err := core.AccountCreate(passedEmail, force, debug)
 
 		if err != nil {
-			fmt.Println(au.Red(au.Bold(fmt.Sprintf("Error %d during up %s", statusCode, file))))
+			fmt.Println(au.Red(au.Bold(fmt.Sprintf("Error %d", statusCode))))
 			return
 		}
 
@@ -57,6 +67,7 @@ var initCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(initCmd)
-	rootCmd.PersistentFlags().BoolVar(&force, "force", false, "force reset your account")
-	rootCmd.PersistentFlags().StringVar(&passedEmail, "email", "", "Your email address.")
+	rootCmd.PersistentFlags().BoolVarP(&force, "force", "", false, "force reset your account")
+	rootCmd.PersistentFlags().StringVarP(&passedEmail, "email", "e", "", "Your email address.")
+	rootCmd.MarkFlagRequired("email")
 }

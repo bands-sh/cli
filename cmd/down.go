@@ -9,11 +9,14 @@ import (
 	"github.com/spf13/viper"
 )
 
-// downCmd represents the down command
 var downCmd = &cobra.Command{
 	Use:   "down",
-	Short: "",
-	Long:  ``,
+	Short: "Deactive the checkout page",
+	Long: `This command will deactivate the checkout page.
+It will also archive all objects created from the yaml input.
+
+Nothing will get permanently deleted, and this checkout 
+page can be brought back up with "bands up" command.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		token = viper.GetString("token")
 		email = viper.GetString("email")
@@ -21,7 +24,7 @@ var downCmd = &cobra.Command{
 
 		if file != "" {
 			fmt.Println(``)
-			fmt.Println(fmt.Sprintf("Bringing it down %s...", file))
+			fmt.Println(fmt.Sprintf("Deactivating %s...", file))
 
 			yaml, _, statusCode, err := core.ActionDown(email, token, file)
 
@@ -31,10 +34,10 @@ var downCmd = &cobra.Command{
 			}
 
 			if statusCode == 200 {
+				url = yaml.Data.CheckoutUrl
 				viper.WriteConfig()
-				fmt.Println(au.Green(au.Bold("Success!")))
 				fmt.Println(``)
-				fmt.Println("Your checkout page was brought down.")
+				fmt.Println(au.Green(au.Bold("Success!")), "Checkout page", au.Bold(url), "has been deactivated.")
 				fmt.Println(``)
 			} else {
 				fmt.Println(``)
@@ -47,6 +50,6 @@ var downCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(downCmd)
-
 	downCmd.Flags().StringP("file", "f", "", "bands up -f <payments.yaml>")
+	downCmd.MarkFlagRequired("file")
 }
