@@ -49,7 +49,7 @@ plans:
         - Great for long term projects
       images: []
     usage_type: licensed
-    interval: monthly
+    interval: month
     currency: usd
     amount: '299.00'
 
